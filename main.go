@@ -1,25 +1,22 @@
 package main
 
 import (
-	"os"
-	"time"
+	"log"
 
 	"github.com/amiralii/tbb/config"
-	tb "gopkg.in/tucnak/telebot.v2"
+	"github.com/amiralii/tbb/route"
 )
-
-var b *tb.Bot
 
 func main() {
 
 	config.Environment()
 
-	b, _ = tb.NewBot(tb.Settings{
-		Token:  os.Getenv("TELEGRAM_TOKEN"),
-		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
-	})
+	bot, err := config.InitBot()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	initilizeRoutes()
+	route.Init(&bot)
 
-	b.Start()
+	bot.Start()
 }
