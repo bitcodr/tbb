@@ -16,7 +16,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	route.Init(&bot)
+	route.Init(bot)
 
 	bot.Start()
 }
