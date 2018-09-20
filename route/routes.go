@@ -1,60 +1,56 @@
 package route
 
 import (
-	tb "gopkg.in/tucnak/telebot.v2"
-	"github.com/amiralii/tbb/handler"
+	"io/ioutil"
+	"log"
 
+	tb "gopkg.in/telegram-bot-api.v4"
+)
+
+var numericKeyboard = tb.NewReplyKeyboard(
+	tb.NewKeyboardButtonRow(
+		tb.NewKeyboardButton("ساخت بات جدید"),
+	),
+	tb.NewKeyboardButtonRow(
+		tb.NewKeyboardButton("قوانین"),
+		tb.NewKeyboardButton("بازاریابی"),
+		tb.NewKeyboardButton("بات های من"),
+	),
+	tb.NewKeyboardButtonRow(
+		tb.NewKeyboardButton("گزارش تخلف"),
+		tb.NewKeyboardButton("ارسال نظر"),
+	),
+	tb.NewKeyboardButtonRow(
+		tb.NewKeyboardButton("راهنما"),
+		tb.NewKeyboardButton("ثبت آگهی"),
+		tb.NewKeyboardButton("حامیان ما"),
+	),
 )
 
 //Init config
-func Init(bot *tb.Bot) {
+func Init(bot *tb.BotAPI) {
 
-	handler.Bot = bot
+	u := tb.NewUpdate(0)
+	u.Timeout = 60
 
-	bot.Handle(replybtn("ساخت بات جدید"), handler.NewBotHandler)
-
-	bot.Handle(replybtn("بازاریابی"), handler.VisitorHandler)
-
-	bot.Handle(replybtn("قوانین"), handler.RulesHandler)
-
-	bot.Handle(replybtn("بات های من"), handler.MyBotsHandler)
-
-	bot.Handle(replybtn("ارسال نظر"), handler.SendCommentHandler)
-
-	bot.Handle(replybtn("گزارش تخلف"), handler.ReportAbuseHandler)
-
-	bot.Handle(replybtn("حامیان ما"), handler.SponsersHandler)
-
-	bot.Handle(replybtn("ثبت آگهی"), handler.AddAdvertiseHandler)
-
-	bot.Handle(replybtn("راهنما"), handler.HelpsHandler)
-
-	replyKeys := [][]tb.ReplyButton{
-		[]tb.ReplyButton{*replybtn("ساخت بات جدید")},
-		[]tb.ReplyButton{*replybtn("بازاریابی"), *replybtn("قوانین"), *replybtn("بات های من")},
-		[]tb.ReplyButton{*replybtn("ارسال نظر"), *replybtn("گزارش تخلف")},
-		[]tb.ReplyButton{*replybtn("حامیان ما"), *replybtn("ثبت آگهی"), *replybtn("راهنما")},
-		[]tb.ReplyButton{*replybtn("حامیان ما"), *replybtn("ثبت آگهی"), *replybtn("راهنما")},
+	updates, err := bot.GetUpdatesChan(u)
+	if err !=nil{
+		log.Fatal(err)
 	}
 
-	bot.Handle("/start", func(m *tb.Message) {
-		startHandler(replyKeys, m, bot)
-	})
-
-}
-
-func startHandler(replyKeys [][]tb.ReplyButton, m *tb.Message, bot *tb.Bot) {
-	if !m.Private() {
-		return
+	for update := range updates {
+		if update.Message == nil {
+			continue
+		}
+		html, err := ioutil.ReadFile("./template/start.html")
+		if err != nil {
+			log.Fatal(err)
+		}
+		msg := tb.NewMessage(update.Message.Chat.ID, string(html))
+		msg.ReplyToMessageID = update.Message.MessageID
+		msg.ReplyMarkup = numericKeyboard
+		msg.ParseMode = tb.ModeHTML
+		bot.Send(msg)
 	}
-	bot.Send(m.Sender, "<h1>good<h1>",
-		&tb.ReplyMarkup{
-			ReplyKeyboard:       replyKeys,
-			ResizeReplyKeyboard: true,
-			OneTimeKeyboard:     true,
-		})
-}
 
-func replybtn(name string) *tb.ReplyButton {
-	return &tb.ReplyButton{Text: name}
 }

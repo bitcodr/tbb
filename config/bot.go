@@ -2,21 +2,19 @@ package config
 
 import (
 	"os"
-	"time"
 
-	tb "gopkg.in/tucnak/telebot.v2"
+	tb "gopkg.in/telegram-bot-api.v4"
 )
 
 //InitBot config
-func InitBot() (*tb.Bot, error) {
+func InitBot() (*tb.BotAPI, error) {
 
-	b, err := tb.NewBot(tb.Settings{
-		Token:  os.Getenv("TELEGRAM_TOKEN"),
-		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
-	})
-
+	bot, err := tb.NewBotAPI(os.Getenv("TELEGRAM_TOKEN"))
 	if err != nil {
 		return nil, err
 	}
-	return b, nil
+
+	bot.Debug = true
+
+	return bot, nil
 }

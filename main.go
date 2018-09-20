@@ -18,5 +18,4 @@ func main() {
 
 	route.Init(bot)
 
-	bot.Start()
 }
