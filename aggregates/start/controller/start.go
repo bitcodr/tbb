@@ -1,9 +1,10 @@
-package handler
+package start
 
 import (
 	"io/ioutil"
 	"log"
 
+	"github.com/amiralii/tbb/config"
 	tb "gopkg.in/telegram-bot-api.v4"
 )
 
@@ -12,24 +13,23 @@ func StartHandler(bot *tb.BotAPI, update *tb.Update) {
 
 	numericKeyboard := tb.NewReplyKeyboard(
 		tb.NewKeyboardButtonRow(
-			tb.NewKeyboardButton("ساخت بات جدید"),
+			tb.NewKeyboardButton(config.NewBot),
 		),
 		tb.NewKeyboardButtonRow(
-			tb.NewKeyboardButton("قوانین"),
-			tb.NewKeyboardButton("بازاریابی"),
-			tb.NewKeyboardButton("بات های من"),
+			tb.NewKeyboardButton(config.Rules),
+			tb.NewKeyboardButton(config.Advertisement),
+			tb.NewKeyboardButton(config.MyBots),
 		),
 		tb.NewKeyboardButtonRow(
-			tb.NewKeyboardButton("گزارش تخلف"),
-			tb.NewKeyboardButton("ارسال نظر"),
+			tb.NewKeyboardButton(config.ReportAbuse),
+			tb.NewKeyboardButton(config.SendComment),
 		),
 		tb.NewKeyboardButtonRow(
-			tb.NewKeyboardButton("راهنما"),
-			tb.NewKeyboardButton("ثبت آگهی"),
-			tb.NewKeyboardButton("حامیان ما"),
+			tb.NewKeyboardButton(config.Help),
+			tb.NewKeyboardButton(config.AddAdvertise),
+			tb.NewKeyboardButton(config.Sponsers),
 		),
 	)
-
 	startHTML, err := ioutil.ReadFile("./template/start.html")
 	if err != nil {
 		log.Fatal(err)
@@ -43,7 +43,7 @@ func StartHandler(bot *tb.BotAPI, update *tb.Update) {
 
 
 //NotFoundHandler handler
-func NotFoundHandler(bot *tb.BotAPI, update *tb.Update){
+func NotFoundHandler(bot *tb.BotAPI, update *tb.Update) {
 	notfoundtHTML, err := ioutil.ReadFile("./template/notfound.html")
 	if err != nil {
 		log.Fatal(err)
@@ -53,5 +53,3 @@ func NotFoundHandler(bot *tb.BotAPI, update *tb.Update){
 	msg.ParseMode = tb.ModeHTML
 	bot.Send(msg)
 }
-
-
