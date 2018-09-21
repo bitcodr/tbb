@@ -1,53 +1,57 @@
 package handler
 
-// import (
-// 	tb "gopkg.in/telegram-bot-api.v4"
-// )
+import (
+	"io/ioutil"
+	"log"
 
-// //Bot var 
-// var Bot *tb.Bot
+	tb "gopkg.in/telegram-bot-api.v4"
+)
 
-// //NewBotHandler handler
-// func NewBotHandler(m *tb.Message) {
-// 	Bot.Send(m.Sender, "good job")
-// }
+//StartHandler handler
+func StartHandler(bot *tb.BotAPI, update *tb.Update) {
 
-// //VisitorHandler handler
-// func VisitorHandler(m *tb.Message) {
-// 	Bot.Send(m.Sender, "good job")
-// }
+	numericKeyboard := tb.NewReplyKeyboard(
+		tb.NewKeyboardButtonRow(
+			tb.NewKeyboardButton("ساخت بات جدید"),
+		),
+		tb.NewKeyboardButtonRow(
+			tb.NewKeyboardButton("قوانین"),
+			tb.NewKeyboardButton("بازاریابی"),
+			tb.NewKeyboardButton("بات های من"),
+		),
+		tb.NewKeyboardButtonRow(
+			tb.NewKeyboardButton("گزارش تخلف"),
+			tb.NewKeyboardButton("ارسال نظر"),
+		),
+		tb.NewKeyboardButtonRow(
+			tb.NewKeyboardButton("راهنما"),
+			tb.NewKeyboardButton("ثبت آگهی"),
+			tb.NewKeyboardButton("حامیان ما"),
+		),
+	)
 
-// //RulesHandler handler
-// func RulesHandler(m *tb.Message) {
-// 	Bot.Send(m.Sender, "good job")
-// }
+	startHTML, err := ioutil.ReadFile("./template/start.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+	msg := tb.NewMessage(update.Message.Chat.ID, string(startHTML))
+	msg.ReplyToMessageID = update.Message.MessageID
+	msg.ReplyMarkup = numericKeyboard
+	msg.ParseMode = tb.ModeHTML
+	bot.Send(msg)
+}
 
-// //MyBotsHandler handler
-// func MyBotsHandler(m *tb.Message) {
-// 	Bot.Send(m.Sender, "good job")
-// }
 
-// //SendCommentHandler handler
-// func SendCommentHandler(m *tb.Message) {
-// 	Bot.Send(m.Sender, "good job")
-// }
+//NotFoundHandler handler
+func NotFoundHandler(bot *tb.BotAPI, update *tb.Update){
+	notfoundtHTML, err := ioutil.ReadFile("./template/notfound.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+	msg := tb.NewMessage(update.Message.Chat.ID, string(notfoundtHTML))
+	msg.ReplyToMessageID = update.Message.MessageID
+	msg.ParseMode = tb.ModeHTML
+	bot.Send(msg)
+}
 
-// //ReportAbuseHandler handler
-// func ReportAbuseHandler(m *tb.Message) {
-// 	Bot.Send(m.Sender, "good job")
-// }
 
-// //SponsersHandler handler
-// func SponsersHandler(m *tb.Message) {
-// 	Bot.Send(m.Sender, "good job")
-// }
-
-// //AddAdvertiseHandler handler
-// func AddAdvertiseHandler(m *tb.Message) {
-// 	Bot.Send(m.Sender, "good job")
-// }
-
-// //HelpsHandler handler
-// func HelpsHandler(m *tb.Message) {
-// 	Bot.Send(m.Sender, "good job")
-// }
