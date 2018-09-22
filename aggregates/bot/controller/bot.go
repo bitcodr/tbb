@@ -11,19 +11,15 @@ import (
 //NewBotHandler handler
 func NewBotHandler(bot *tb.BotAPI, update *tb.Update) {
 
-	if cell_phone = nil && confirm_rules == false{
-		ruleHandler(bot, update)
-
-	}
-	if cell_phone = nil && confirm_rules == true{
-		ConfirmIDHandler(bot, update)
-
-	}
-	if cell_phone != nil && confirm_rules == true{
-		createBotHandler(bot, update)
-
-	}
-
+	// if cell_phone = nil && confirm_rules == false{
+	// 	ruleHandler(bot, update)
+	// }
+	// if cell_phone = nil && confirm_rules == true{
+	// 	ConfirmIDHandler(bot, update)
+	// }
+	// if cell_phone != nil && confirm_rules == true{
+	// 	createBotHandler(bot, update)
+	// }
 }
 
 func ruleHandler(bot *tb.BotAPI, update *tb.Update) {
