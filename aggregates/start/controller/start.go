@@ -30,7 +30,7 @@ func StartHandler(bot *tb.BotAPI, update *tb.Update) {
 			tb.NewKeyboardButton(config.Sponsers),
 		),
 	)
-	startHTML, err := ioutil.ReadFile("./template/start.html")
+	startHTML, err := ioutil.ReadFile("../template/start.html")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -44,7 +44,7 @@ func StartHandler(bot *tb.BotAPI, update *tb.Update) {
 
 //NotFoundHandler handler
 func NotFoundHandler(bot *tb.BotAPI, update *tb.Update) {
-	notfoundtHTML, err := ioutil.ReadFile("./template/notfound.html")
+	notfoundtHTML, err := ioutil.ReadFile("../template/notfound.html")
 	if err != nil {
 		log.Fatal(err)
 	}
