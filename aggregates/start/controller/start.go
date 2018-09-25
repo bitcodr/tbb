@@ -41,7 +41,6 @@ func StartHandler(bot *tb.BotAPI, update *tb.Update) {
 	bot.Send(msg)
 }
 
-
 //NotFoundHandler handler
 func NotFoundHandler(bot *tb.BotAPI, update *tb.Update) {
 	notfoundtHTML, err := ioutil.ReadFile("../template/notfound.html")
