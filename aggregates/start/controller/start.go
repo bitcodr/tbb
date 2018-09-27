@@ -32,7 +32,6 @@ func StartHandler(bot *tb.BotAPI, update *tb.Update) {
 		),
 	)
 
-
 	/// Inline keyword
 
 	// numericKeyboard := tb.NewInlineKeyboardMarkup(
@@ -45,10 +44,9 @@ func StartHandler(bot *tb.BotAPI, update *tb.Update) {
 	// 		tb.NewInlineKeyboardButtonData(config.MyBots,"sdvsdv"),
 	// 	),
 	// )
-	
 
 	dir, _ := os.Getwd()
-	startHTML, err := ioutil.ReadFile(dir+"/aggregates/start/template/start.html")
+	startHTML, err := ioutil.ReadFile(dir + "/aggregates/start/template/start.html")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -62,7 +60,7 @@ func StartHandler(bot *tb.BotAPI, update *tb.Update) {
 //NotFoundHandler handler
 func NotFoundHandler(bot *tb.BotAPI, update *tb.Update) {
 	dir, _ := os.Getwd()
-	notfoundtHTML, err := ioutil.ReadFile(dir+"/aggregates/start/template/notfound.html")
+	notfoundtHTML, err := ioutil.ReadFile(dir + "/aggregates/start/template/notfound.html")
 	if err != nil {
 		log.Fatal(err)
 	}

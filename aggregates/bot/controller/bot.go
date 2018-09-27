@@ -11,8 +11,6 @@ import (
 //NewBotHandler handler
 func NewBotHandler(bot *tb.BotAPI, update *tb.Update) {
 
-	ruleHandler(bot,update)
-
 	// if cell_phone = nil && confirm_rules == false{
 	// 	ruleHandler(bot, update)
 	// }
