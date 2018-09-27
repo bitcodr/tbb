@@ -1,7 +1,6 @@
 package config
 
 import (
-	"time"
 	"os"
 
 	tb "gopkg.in/telegram-bot-api.v4"
@@ -29,13 +28,13 @@ func BotUpdates(bot *tb.BotAPI) (*tb.UpdatesChannel, error) {
 	if err != nil {
 		return nil, err
 	}
-	
+
 	// Optional: wait for updates and clear them if you don't want to handle
 	// a large backlog of old messages
-	time.Sleep(time.Microsecond * 500)
-	for len(updates) !=0{
-		<-updates
-	}
+	// time.Sleep(time.Microsecond * 500)
+	// for len(updates) != 0 {
+	// 	<-updates
+	// }
 
 	return &updates, nil
 }

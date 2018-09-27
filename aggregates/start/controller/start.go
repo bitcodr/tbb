@@ -3,6 +3,7 @@ package start
 import (
 	"io/ioutil"
 	"log"
+	"os"
 
 	"github.com/amiralii/tbb/config"
 	tb "gopkg.in/telegram-bot-api.v4"
@@ -30,7 +31,24 @@ func StartHandler(bot *tb.BotAPI, update *tb.Update) {
 			tb.NewKeyboardButton(config.Sponsers),
 		),
 	)
-	startHTML, err := ioutil.ReadFile("../template/start.html")
+
+
+	/// Inline keyword
+
+	// numericKeyboard := tb.NewInlineKeyboardMarkup(
+	// 	tb.NewInlineKeyboardRow(
+	// 		tb.NewInlineKeyboardButtonData(config.NewBot,"dvsdv"),
+	// 	),
+	// 	tb.NewInlineKeyboardRow(
+	// 		tb.NewInlineKeyboardButtonData(config.Rules,"sdf"),
+	// 		tb.NewInlineKeyboardButtonData(config.Advertisement,"sdf"),
+	// 		tb.NewInlineKeyboardButtonData(config.MyBots,"sdvsdv"),
+	// 	),
+	// )
+	
+
+	dir, _ := os.Getwd()
+	startHTML, err := ioutil.ReadFile(dir+"/aggregates/start/template/start.html")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -43,7 +61,8 @@ func StartHandler(bot *tb.BotAPI, update *tb.Update) {
 
 //NotFoundHandler handler
 func NotFoundHandler(bot *tb.BotAPI, update *tb.Update) {
-	notfoundtHTML, err := ioutil.ReadFile("../template/notfound.html")
+	dir, _ := os.Getwd()
+	notfoundtHTML, err := ioutil.ReadFile(dir+"/aggregates/start/template/notfound.html")
 	if err != nil {
 		log.Fatal(err)
 	}
