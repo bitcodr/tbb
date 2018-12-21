@@ -32,9 +32,9 @@ func BotUpdates(bot *tb.BotAPI) (*tb.UpdatesChannel, error) {
 	// Optional: wait for updates and clear them if you don't want to handle
 	// a large backlog of old messages
 	// time.Sleep(time.Microsecond * 500)
-	// for len(updates) != 0 {
-	// 	<-updates
-	// }
+	for len(updates) != 0 {
+		<-updates
+	}
 
 	return &updates, nil
 }
